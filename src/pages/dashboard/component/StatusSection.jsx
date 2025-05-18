@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 function StatusCard(props) {
   const session = {
-    date: "05/04/2024", // MM/DD/YYYY
+    date: "05/04/2024", // MM/DD/YYYY nnnnn
     time: "09:00 PM", // 12-hour format
   };
   return (
