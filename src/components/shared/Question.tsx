@@ -3,19 +3,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useEffect } from "react";
 
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
@@ -24,46 +20,34 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createQuestionAnswer } from "@/lib/services/api/questionAnswer";
-import { useUser } from "@clerk/clerk-react";
-import { Navigate } from "react-router-dom";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const FormSchema = z.object({
   type: z.string(),
 });
 
 function QuestionCard(props) {
-  const { user } = useUser();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      type: props.value || "",
+    },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("Submitted Data:", data);
-    if (data) {
-      const id = props._id;
-      createQuestionAnswer({
-        data: data.type,
-        id: id,
-        userId: user.id,
-      });
+  // Sync external value to form when parent updates
+  useEffect(() => {
+    form.setValue("type", props.value || "");
+  }, [props.value, form]);
 
-      alert(`Question ${id} is Success!`);
-    } else {
-    }
-  }
-
-  function handleReset() {
-    form.resetField("type"); // Reset all form values
-  }
+  const handleChange = (value) => {
+    form.setValue("type", value);
+    props.onChange(value); // Notify parent of selection
+  };
 
   return (
     <Card className="border-2 border-blue-500 w-[300px]">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-2/3 space-y-6"
-        >
+        <form className="w-full space-y-6">
           <FormField
             control={form.control}
             name="type"
@@ -71,44 +55,32 @@ function QuestionCard(props) {
               <FormItem className="space-y-3">
                 <FormLabel>
                   <CardHeader>
-                    <CardTitle>{props.question} </CardTitle>
+                    <CardTitle>{props.question}</CardTitle>
                     <CardDescription>
-                      {" "}
-                      Little Interest or pleasure in doing things{" "}
+                      Little interest or pleasure in doing things
                     </CardDescription>
                   </CardHeader>
                 </FormLabel>
                 <CardContent>
                   <FormControl>
                     <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      onValueChange={handleChange}
+                      value={field.value}
                       className="flex flex-col space-y-1"
                     >
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value={props.a1} />
-                        </FormControl>
-                        <FormLabel>{props.a1}</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value={props.a2} />
-                        </FormControl>
-                        <FormLabel>{props.a2}</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value={props.a3} />
-                        </FormControl>
-                        <FormLabel>{props.a3}</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value={props.a4} />
-                        </FormControl>
-                        <FormLabel>{props.a4}</FormLabel>
-                      </FormItem>
+                      {[props.a1, props.a2, props.a3, props.a4].map(
+                        (answer, index) => (
+                          <FormItem
+                            key={index}
+                            className="flex items-center space-x-2 space-y-0"
+                          >
+                            <FormControl>
+                              <RadioGroupItem value={answer} />
+                            </FormControl>
+                            <FormLabel>{answer}</FormLabel>
+                          </FormItem>
+                        )
+                      )}
                     </RadioGroup>
                   </FormControl>
                 </CardContent>
@@ -116,16 +88,6 @@ function QuestionCard(props) {
               </FormItem>
             )}
           />
-          <CardFooter className="flex justify-between">
-            <Button type="submit">Submit</Button>
-            <Button
-              className="w-fit bg-transparent hover:bg-transparent border text-black"
-              type="button"
-              onClick={handleReset}
-            >
-              Cancel
-            </Button>
-          </CardFooter>
         </form>
       </Form>
     </Card>

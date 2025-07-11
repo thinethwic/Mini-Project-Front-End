@@ -1,6 +1,6 @@
 import { useUser } from "@clerk/clerk-react";
 import { Navigate } from "react-router-dom";
-import { Component } from "./component/pieChart";
+import { Component } from "./component/lineChartComponent";
 function HomeDashboardPage() {
   const { isLoaded, isSignedIn, user } = useUser();
 
@@ -14,12 +14,16 @@ function HomeDashboardPage() {
   return (
     <div className="p-4 w-max">
       <h1> Welcome UniMind AI </h1>
-      <h2 className="mt-6"> Hi {user.firstName}</h2>
+      <h2 className="mt-6">
+        {" "}
+        Hi {user.firstName} {user.lastName}
+      </h2>
+      <br />
+      <Component />
       <h3 className="mt-6">
         Introduction of UniMind AI as a Depression Detection Tool for University
         Students
       </h3>
-      <Component />
       <h4 className="mt-4">
         As third-year HICT (Health Information and Communication Technology)
         students from the Gampaha Wickramarachchi University of Indigenous

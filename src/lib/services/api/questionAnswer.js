@@ -1,7 +1,6 @@
 export const createQuestionAnswer = async ({
-    data,
-    id,
-    userId, 
+    UserId,
+    answer, 
   }) => {
 
     const token = await window.Clerk.session.getToken();
@@ -12,9 +11,8 @@ export const createQuestionAnswer = async ({
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        data,
-        id,
-        userId,
+        userId: UserId,
+        answers: answer,
       }),
     });
   };
