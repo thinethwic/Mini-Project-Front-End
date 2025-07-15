@@ -49,7 +49,7 @@ const route = createBrowserRouter([
             element: <QuestionDashboardPage />,
           },
           {
-            path: "medication",
+            path: "?medication/:id",
             element: <MedicationPage />,
           },
           {

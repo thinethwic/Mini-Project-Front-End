@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -60,7 +59,7 @@ function StepsHome(props) {
       </CardContent>
 
       <CardFooter className="flex justify-end relative z-10 pt-2">
-        <Link to="/sign-in">
+        <Link to={props.url}>
           <Button className="bg-red-600 hover:bg-red-500 text-white font-semibold px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105 flex items-center space-x-2">
             <span>Try IT Now</span>
             <svg

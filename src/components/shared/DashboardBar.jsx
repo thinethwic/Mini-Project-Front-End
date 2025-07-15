@@ -34,7 +34,7 @@ const items = [
   },
   {
     title: "Medication and Treatment",
-    url: "/dashboard/medication",
+    url: "/dashboard/status",
     icon: Hospital,
   },
   {

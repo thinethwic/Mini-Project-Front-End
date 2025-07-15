@@ -8,7 +8,10 @@ import { FaSignInAlt, FaQuestionCircle, FaBook } from "react-icons/fa";
 import TeamMemebrs from "./component/Team";
 import { Separator } from "@/components/ui/separator";
 
+import { useUser } from "@clerk/clerk-react";
+
 function HomePage() {
+  const { isSignedIn } = useUser();
   return (
     <div className="animate-fade-in-up">
       {/* Hero section with fade-in-down */}
@@ -71,7 +74,7 @@ function HomePage() {
 
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Step's of
+                Step s of
               </span>
               <br />
               <span className="text-gray-700">the Depression Detection</span>
@@ -91,18 +94,21 @@ function HomePage() {
               content="Login to The WebSite"
               icon={<FaSignInAlt />}
               description="Securely access our platform using your Google account. Your privacy and data security are our top priorities."
+              url="/sign-in"
             />
             <StepsHome
               step="Step 2"
               content="Answer the Questionnaire"
               icon={<FaQuestionCircle />}
               description="Complete our clinically validated questionnaire. It takes just 5-10 minutes and helps us understand your mental wellness."
+              url="/dashboard/question"
             />
             <StepsHome
               step="Step 3"
               content="Results According to Answers"
               icon={<FaBook />}
               description="Receive personalized insights and recommendations based on your responses, along with helpful resources for your journey."
+              url="/dashboard/status/"
             />
           </div>
 
@@ -130,7 +136,7 @@ function HomePage() {
               <h3 className="text-2xl font-bold mb-4">
                 Ready to begin your wellness journey?
               </h3>
-              <Link to="/sign-in">
+              <Link to={isSignedIn ? "/dashboard" : "/sign-in"}>
                 <Button className="bg-white text-blue-600 font-bold py-3 px-8 rounded-xl hover:bg-gray-50 transition-colors duration-300 hover:scale-105 transform">
                   Start Free Assessment
                 </Button>
@@ -150,7 +156,7 @@ function HomePage() {
       <Separator className="mt-20" />
 
       {/* CTA Section */}
-      <div className="relative overflow-hidden mt-5">
+      <div className="relative overflow-hidden mt-1">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50"></div>
 
         <div className="relative z-10 py-24 px-4">
@@ -173,13 +179,12 @@ function HomePage() {
             </p>
 
             <div className="mt-8 flex gap-4 justify-center">
-              <Link to="/sign-in">
+              <Link to={isSignedIn ? "/dashboard" : "/sign-in"}>
                 <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-xl">
                   Start Your Assessment
                 </Button>
               </Link>
-
-              <Link to="/sign-in">
+              <Link to={isSignedIn ? "/dashboard" : "/sign-in"}>
                 <Button variant="outline" className="px-8 py-4 rounded-xl">
                   Book A Session
                 </Button>

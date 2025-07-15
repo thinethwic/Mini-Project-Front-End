@@ -3,14 +3,12 @@ function TeamMemebrs() {
     {
       name: "Thineth Wickramarchchi",
       role: "Developer",
-      imageUrl:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      imageUrl: "../public/assest/Thinethprofile.jpg",
     },
     {
       name: "Kawithma Thushal Ransitha",
       role: "Developer",
-      imageUrl:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      imageUrl: "../public/assest/Kawithmaprofile.jpg",
     },
     {
       name: "Chanuka Heshan",
@@ -41,7 +39,7 @@ function TeamMemebrs() {
 
         {/* Team Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {people.map((person, index) => (
+          {people.map((person) => (
             <div
               key={person.name}
               className="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 text-center hover:-translate-y-2 border border-gray-100"
