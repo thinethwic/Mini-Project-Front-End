@@ -25,8 +25,8 @@ function Footer() {
             </div>
 
             <p className="text-gray-600 dark:text-gray-300 text-lg mb-6 leading-relaxed max-w-md">
-              Empowering over 7,000+ students with AI-driven consultations and
-              personalized learning experiences.
+              Delivering personalized AI consultation to more than 40,000 of
+              University Student's through innovative AI-powered consultation.
             </p>
 
             {/* Contact Info */}
@@ -41,28 +41,28 @@ function Footer() {
               </div>
               <div className="flex items-center text-gray-600 dark:text-gray-300">
                 <FaMapMarkerAlt className="mr-3 text-red-500" />
-                <span>San Francisco, CA</span>
+                <span>GWUIM, Kandy Rd, Yakkala</span>
               </div>
             </div>
 
             {/* Social Media */}
             <div className="flex gap-4">
               <a
-                href="#"
+                href="https://web.facebook.com/"
                 className="w-12 h-12 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
                 aria-label="Facebook"
               >
                 <FaFacebook className="text-xl" />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/"
                 className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
                 aria-label="Instagram"
               >
                 <FaInstagram className="text-xl" />
               </a>
               <a
-                href="#"
+                href="https://www.youtube.com/"
                 className="w-12 h-12 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
                 aria-label="YouTube"
               >

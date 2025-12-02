@@ -36,11 +36,6 @@ function MedicationCard(props) {
     },
   ];
 
-  const session = {
-    date: "05/04/2024", // MM/DD/YYYY
-    time: "09:00 PM", // 12-hour format
-  };
-
   // Fetch treatment data from database based on depression type
   useEffect(() => {
     const fetchTreatmentData = async () => {
@@ -208,7 +203,7 @@ function MedicationCard(props) {
                     </p>
                     <Input
                       type="text"
-                      value={session.date}
+                      value={props.date}
                       readOnly
                       className="border-0 bg-transparent p-0 text-gray-800 font-semibold focus:ring-0"
                     />
@@ -223,7 +218,7 @@ function MedicationCard(props) {
                     <p className="text-sm font-medium text-gray-600">Time</p>
                     <Input
                       type="text"
-                      value={session.time}
+                      value={props.time}
                       readOnly
                       className="border-0 bg-transparent p-0 text-gray-800 font-semibold focus:ring-0"
                     />
@@ -338,7 +333,7 @@ function MedicationCard(props) {
                   className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium py-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
                 >
                   <Link
-                    to="/dashboard/accept-treatment"
+                    to=""
                     className="flex items-center justify-center space-x-2"
                   >
                     <FaCheck className="text-sm" />
@@ -351,7 +346,7 @@ function MedicationCard(props) {
                   className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium py-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
                 >
                   <Link
-                    to="/dashboard/decline-treatment"
+                    to=""
                     className="flex items-center justify-center space-x-2"
                   >
                     <FaTimes className="text-sm" />

@@ -9,6 +9,7 @@ import TeamMemebrs from "./component/Team";
 import { Separator } from "@/components/ui/separator";
 
 import { useUser } from "@clerk/clerk-react";
+import ContactUs from "./component/contactUs";
 
 function HomePage() {
   const { isSignedIn } = useUser();
@@ -153,7 +154,7 @@ function HomePage() {
         <TeamMemebrs />
       </div>
 
-      <Separator className="mt-20" />
+      <Separator className="mt-2" />
 
       {/* CTA Section */}
       <div className="relative overflow-hidden mt-1">
@@ -193,8 +194,9 @@ function HomePage() {
           </div>
         </div>
       </div>
-
-      <Separator className="mt-10" />
+      <Separator className="mt-5" />
+      <ContactUs className="mt-5" />
+      <Separator className="mt-5" />
     </div>
   );
 }

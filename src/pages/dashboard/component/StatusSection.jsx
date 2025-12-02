@@ -11,11 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 function StatusCard(props) {
-  const session = {
-    date: "05/04/2024", // MM/DD/YYYY
-    time: "09:00 PM", // 12-hour format
-  };
-
   // Status color mapping for depression levels
   const getStatusColor = (statu) => {
     const statusLower = statu?.toLowerCase();
@@ -101,7 +96,7 @@ function StatusCard(props) {
               </p>
               <Input
                 type="text"
-                value={session.date}
+                value={props.date}
                 readOnly
                 className="border-0 bg-transparent p-0 text-gray-800 font-semibold focus:ring-0"
               />
@@ -118,7 +113,7 @@ function StatusCard(props) {
               </p>
               <Input
                 type="text"
-                value={session.time}
+                value={props.time}
                 readOnly
                 className="border-0 bg-transparent p-0 text-gray-800 font-semibold focus:ring-0"
               />

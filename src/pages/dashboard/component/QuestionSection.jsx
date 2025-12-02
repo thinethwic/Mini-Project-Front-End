@@ -60,6 +60,7 @@ function QuestionSection() {
       await createQuestionAnswer({
         UserId: user.id,
         answer: answerArray,
+        date: new Date(),
       });
 
       setSubmitSuccess(true);

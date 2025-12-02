@@ -62,12 +62,44 @@ function StudentStatusPage() {
     },
   ];
 
+  const formatDate = (dateString) => {
+    // Convert string to Date object first
+    const date = new Date(dateString);
+
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return "Invalid Date";
+    }
+
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const formatTime = (dateString) => {
+    // Convert string to Date object first
+    const date = new Date(dateString);
+
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return "Invalid Time";
+    }
+
+    return date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
   const getStatusDescription = (rating) => {
     // Handle different rating formats
     let normalizedRating = rating;
 
     // If rating is "No", map it to "No Depression"
-    if (rating === "No" || rating === "no" || rating === "No Depression") {
+    if (rating === "No" || rating === "no" || rating === "No depression") {
       normalizedRating = "No Depression";
     }
     // If rating is "mild", map it to "Mild Level Depression"
@@ -222,6 +254,8 @@ function StudentStatusPage() {
                     description={detail.description}
                     severity={detail.severity}
                     _id={item._id}
+                    date={formatDate(item.createdAt)}
+                    time={formatTime(item.createdAt)}
                   />
                 </div>
               );
@@ -245,13 +279,13 @@ function StudentStatusPage() {
                 >
                   <div
                     className={`w-3 h-3 rounded-full mx-auto mb-2 ${
-                      item.rating === "No" || item.rating === "No Depression"
+                      item.rating === "No" || item.rating === "No depression"
                         ? "bg-green-500"
                         : item.rating === "mild" ||
-                          item.rating === "Mild Level Depression"
+                          item.rating === "Mild depression"
                         ? "bg-yellow-500"
                         : item.rating === "moderate" ||
-                          item.rating === "Moderate Level Depression"
+                          item.rating === "Moderate depression"
                         ? "bg-orange-500"
                         : "bg-red-500"
                     }`}

@@ -21,9 +21,30 @@ import {
 } from "lucide-react";
 
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getQuestionsAnswersById } from "@/lib/services/api/questionAnswer";
 
 function HomeDashboardPage() {
   const { isLoaded, isSignedIn, user } = useUser();
+
+  const [questionsAnswers, setQuestions] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("Fetching data for user:", user.id); // Debug log
+
+        const data = await getQuestionsAnswersById(user.id);
+        console.log("Received data:", data); // Debug log
+
+        setQuestions(data);
+      } catch (err) {
+        console.error("Error in useEffect:", err);
+      }
+    };
+
+    fetchData();
+  }, [isLoaded, isSignedIn, user?.id]);
 
   if (!isLoaded) {
     return (
@@ -36,18 +57,33 @@ function HomeDashboardPage() {
   if (!isSignedIn) {
     return <Navigate to="/sign-in" />;
   }
-
-  // Mock data - replace with actual API data
   const userStats = {
-    assessmentsCompleted: 3,
-    totalAssessments: 8,
-    lastLoginDate: new Date().toLocaleDateString(),
-    lastLoginTime: new Date().toLocaleTimeString(),
     streakDays: 7,
     totalTimeSpent: "2h 45m",
     averageScore: 85,
-    joinDate: "March 2024",
   };
+
+  const getLastLoginDateTime = () => {
+    if (!user?.lastSignInAt) return { date: null, time: null };
+
+    const lastLogin = new Date(user.lastSignInAt);
+
+    return {
+      date: lastLogin.toLocaleDateString(), // e.g., "12/25/2023"
+      time: lastLogin.toLocaleTimeString(), // e.g., "2:30:45 PM"
+    };
+  };
+
+  const getJoinedDate = () => {
+    if (!user?.createdAt) return null;
+
+    const joinedDate = new Date(user.createdAt);
+    return joinedDate.toLocaleDateString(); // e.g., "12/25/2023"
+  };
+
+  const joinedDate = getJoinedDate();
+
+  const { date, time } = getLastLoginDateTime();
 
   const getWelcomeMessage = () => {
     const hour = new Date().getHours();
@@ -57,8 +93,15 @@ function HomeDashboardPage() {
   };
 
   const getCompletionPercentage = () => {
+    if (questionsAnswers.length > 0) {
+      return Math.round(
+        (questionsAnswers.length / questionsAnswers.length) * 100
+      );
+    }
+
+    // Fallback to mock data calculation
     return Math.round(
-      (userStats.assessmentsCompleted / userStats.totalAssessments) * 100
+      (questionsAnswers.length / questionsAnswers.length) * 100
     );
   };
 
@@ -95,11 +138,11 @@ function HomeDashboardPage() {
               <div className="flex flex-wrap gap-4 text-sm">
                 <div className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full">
                   <Calendar className="w-4 h-4" />
-                  <span>Last login: {userStats.lastLoginDate}</span>
+                  <span>Last login: {date}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full">
                   <Clock className="w-4 h-4" />
-                  <span>{userStats.lastLoginTime}</span>
+                  <span>{time}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full">
                   <Timer className="w-4 h-4" />
@@ -113,8 +156,7 @@ function HomeDashboardPage() {
                 <CardContent className="p-6">
                   <div className="text-center">
                     <div className="text-3xl font-bold mb-2">
-                      {userStats.assessmentsCompleted}/
-                      {userStats.totalAssessments}
+                      {questionsAnswers.length}/{questionsAnswers.length}
                     </div>
                     <p className="text-blue-100 mb-4">Assessments Completed</p>
                     <div className="w-full bg-white/20 rounded-full h-2">
@@ -200,7 +242,7 @@ function HomeDashboardPage() {
                     Member Since
                   </p>
                   <p className="text-2xl font-bold text-blue-600">
-                    {userStats.joinDate}
+                    {joinedDate}
                   </p>
                 </div>
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">

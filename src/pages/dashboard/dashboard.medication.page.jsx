@@ -38,6 +38,38 @@ function MedicationPage() {
       });
   }, [params]);
 
+  const formatDate = (dateString) => {
+    // Convert string to Date object first
+    const date = new Date(dateString);
+
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return "Invalid Date";
+    }
+
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const formatTime = (dateString) => {
+    // Convert string to Date object first
+    const date = new Date(dateString);
+
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return "Invalid Time";
+    }
+
+    return date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
   // Show loading state
   if (loading) {
     return (
@@ -201,7 +233,11 @@ function MedicationPage() {
             </div>
 
             <div className="p-0">
-              <MedicationCard status={Application.rating} />
+              <MedicationCard
+                status={Application.rating}
+                date={formatDate(Application.createdAt)}
+                time={formatTime(Application.createdAt)}
+              />
             </div>
           </div>
 
